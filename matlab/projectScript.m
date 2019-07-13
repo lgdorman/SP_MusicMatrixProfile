@@ -1,14 +1,16 @@
 close all
 clear all
 
-%%
-% add path to matrix profile
+%% assumes that working directory is SP_MusicMatrixProfile\matlab
+
+rondoFilename = '..\audioFiles\IMSLP111573-PMLP01846-Música_Clásica_-_Rondo_Alla_Turca._Wolfgang_Amadeus_Mozart.mp3';
+
 
 %%
 
 % Mozart Piano Sonata No. 11 (Movt 3)
 % From https://imslp.org/wiki/Piano_Sonata_No.11_in_A_major,_K.331/300i_(Mozart,_Wolfgang_Amadeus)
-[a,f] = audioread('C:\Users\Logan\Documents\Signal Processing\Project\IMSLP111573-PMLP01846-Música_Clásica_-_Rondo_Alla_Turca._Wolfgang_Amadeus_Mozart.mp3');
+[a,f] = audioread(rondoFilename);
 
 % two columns of a are left and right channels. For simplicity, work only
 % with left channel a(:,1);
