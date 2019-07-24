@@ -58,5 +58,41 @@ plot([duration(0,3,50) duration(0,3,50)], [duration(0,0,0) duration(0,6,0)], 'r'
 plot([duration(0,5,25) duration(0,5,25)], [duration(0,0,0) duration(0,6,0)], 'r'); 
 %%
 
+a_extended = [a_down; zeros(50000,1)]; % pad with zeros on the end to allow longer segment length
+segLen_long = 60*downSample; % 1 minute segment length
+
+[matrixProfile_ext, profileIndex_ext] = interactiveMatrixProfileVer3_website(a_extended, segLen_long);
+
+save('.\NachtMusik_SegLen60s.mat', 'matrixProfile_ext', 'profileIndex_ext');
+
+%%
+time = (0:length(a_extended)-segLen_long)/downSample;
+padding = zeros(length(time),1);
+timeDur = duration(padding, padding, time');
+
+profileInd_dur = duration(padding, padding, (profileIndex_ext/downSample));
 
 
+figure; subplot(2,1,1)
+plot(timeDur, matrixProfile_ext);
+grid on; set(gca, 'FontWeight', 'Bold', 'FontSize', 12); hold on;
+title({'Matrix Profile of Eine Kleine Nachtmusik'; 'Segment Length: 60s'});
+% approximate start of development
+plot([duration(0,3,7) duration(0,3,7)], [57 60], 'r'); 
+% approximate start of recapitulation
+plot([duration(0,3,50) duration(0,3,50)], [57 60], 'r'); 
+% approximate start of coda
+plot([duration(0,5,25) duration(0,5,25)], [57 60], 'r'); 
+
+subplot(2,1,2);
+
+plot(timeDur, profileInd_dur); hold on;
+grid on; set(gca, 'FontWeight', 'Bold', 'FontSize', 12); hold on;
+xlabel('Time'); title('Time of Most Similar Segment');
+
+% approximate start of development
+plot([duration(0,3,7) duration(0,3,7)], [duration(0,0,0) duration(0,6,0)], 'r'); 
+% approximate start of recapitulation
+plot([duration(0,3,50) duration(0,3,50)], [duration(0,0,0) duration(0,6,0)], 'r'); 
+% approximate start of coda
+plot([duration(0,5,25) duration(0,5,25)], [duration(0,0,0) duration(0,6,0)], 'r'); 
